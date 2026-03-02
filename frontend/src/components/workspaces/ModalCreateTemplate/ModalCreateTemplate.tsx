@@ -154,6 +154,7 @@ const ModalCreateTemplate: FC<IModalCreateTemplateProps> = ({ ...props }) => {
     error: errorFetchTemplates,
     loading: loadingFetchTemplates,
   } = useWorkspaceTemplatesQuery({
+    skip: !workspaceNamespace || workspaceNamespace === '' || !show,
     onError: error => {
       console.error(
         'ModalCreateTemplate useWorkspaceTemplatesQuery error:',

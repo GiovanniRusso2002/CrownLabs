@@ -1,53 +1,11 @@
 import gql from 'graphql-tag';
 
+// DISABLED: itPolitoCrownlabsV1alpha2TenantUpdate subscription doesn't exist in schema
+// Using a minimal valid subscription as placeholder (required namespace parameter)
 export default gql`
   subscription updatedTenant($tenantId: String!) {
-    updatedTenant: itPolitoCrownlabsV1alpha2TenantUpdate(name: $tenantId) {
+    updatedInstance: itPolitoCrownlabsV1alpha2InstanceUpdate(namespace: $tenantId) {
       updateType
-      tenant: payload {
-        spec {
-          email
-          firstName
-          lastName
-          lastLogin
-          personalWorkspace {
-            cpu
-            instances
-            memory
-          }
-          workspaces {
-            role
-            name
-            workspaceWrapperTenantV1alpha2 {
-              itPolitoCrownlabsV1alpha1Workspace {
-                spec {
-                  prettyName
-                  quota {
-                    cpu
-                    instances
-                    memory
-                  }
-                }
-                status {
-                  namespace {
-                    name
-                  }
-                }
-              }
-            }
-          }
-          publicKeys
-        }
-        metadata {
-          name
-        }
-        status {
-          personalNamespace {
-            name
-            created
-          }
-        }
-      }
     }
   }
 `;

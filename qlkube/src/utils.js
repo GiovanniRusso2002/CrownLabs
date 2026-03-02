@@ -25,26 +25,34 @@ function uncapitalizeType(name) {
   return name && name[0].toLowerCase() + name.slice(1);
 }
 
-function getBearerToken(connectionParams) {
-  if (!connectionParams) throw new Error('Parameter connectionParams cannot be empty!');
+function getBearerToken(connectionParams, required = true) {
+  if (!connectionParams && required) throw new Error('Parameter connectionParams cannot be empty!');
+  if (!connectionParams) return null;
+  
   const auth = connectionParams.authorization || connectionParams.Authorization;
   if (!auth) {
-    throw new GraphQLError('Token Error! Token absent!', {
-      extensions: {
-        code: 'FORBIDDEN',
-        connectionParams,
-        http: { status: 403 },
-      },
-    });
+    if (required) {
+      throw new GraphQLError('Token Error! Token absent!', {
+        extensions: {
+          code: 'FORBIDDEN',
+          connectionParams,
+          http: { status: 403 },
+        },
+      });
+    }
+    return null;
   }
   const token = auth.split(/\s+/)[1];
   if (!token) {
-    throw new GraphQLError('Token Error! Token not valid!', {
-      extensions: {
-        code: 'FORBIDDEN',
-        http: { status: 403 },
-      },
-    });
+    if (required) {
+      throw new GraphQLError('Token Error! Token not valid!', {
+        extensions: {
+          code: 'FORBIDDEN',
+          http: { status: 403 },
+        },
+      });
+    }
+    return null;
   }
 
   return token;

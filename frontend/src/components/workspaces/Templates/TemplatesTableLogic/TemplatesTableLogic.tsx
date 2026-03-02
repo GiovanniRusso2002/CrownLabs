@@ -62,6 +62,7 @@ const TemplatesTableLogic: FC<ITemplateTableLogicProps> = ({ ...props }) => {
     subscribeToMore: subscribeToMoreTemplates,
     data: templateListData,
   } = useWorkspaceTemplatesQuery({
+    skip: !workspaceNamespace || workspaceNamespace === '',
     variables: { workspaceNamespace },
     onError: error => {
       console.error(
@@ -95,7 +96,7 @@ const TemplatesTableLogic: FC<ITemplateTableLogicProps> = ({ ...props }) => {
   }, [templateListData?.templateList?.templates]);
 
   useEffect(() => {
-    if (!loadingTemplate && !errorTemplate && !errorsQueue.length) {
+    if (!loadingTemplate && !errorTemplate && !errorsQueue.length && workspaceNamespace && workspaceNamespace !== '') {
       const unsubscribe =
         subscribeToMoreTemplates<UpdatedWorkspaceTemplatesSubscription>({
           onError: makeErrorCatcher(ErrorTypes.GenericError),

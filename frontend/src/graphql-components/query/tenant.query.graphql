@@ -13,23 +13,6 @@ query tenant($tenantId: String!) {
       workspaces {
         role
         name
-        workspaceWrapperTenantV1alpha2 {
-          itPolitoCrownlabsV1alpha1Workspace {
-            spec {
-              prettyName
-              quota {
-                cpu
-                instances
-                memory
-              }
-            }
-            status {
-              namespace {
-                name
-              }
-            }
-          }
-        }
       }
       publicKeys
     }

@@ -79,27 +79,6 @@ export type ContainerStartupOptionsInput = {
   startupArgs?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-/** Optional urls for advanced integration features. */
-export type CustomizationUrls = {
-  __typename?: 'CustomizationUrls';
-  /** URL to which POST an archive with the contents found (at instance termination) in Template.ContainerStartupOptions.ContentPath. */
-  contentDestination?: Maybe<Scalars['String']['output']>;
-  /** URL from which GET the archive to be extracted into Template.ContainerStartupOptions.ContentPath. This field, if set, OVERRIDES Template.ContainerStartupOptions.SourceArchiveURL. */
-  contentOrigin?: Maybe<Scalars['String']['output']>;
-  /** URL which is periodically checked (with a GET request) to determine automatic instance shutdown. Should return any 2xx status code if the instance has to keep running, any 4xx otherwise. In case of 2xx response, it should output a JSON with a `deadline` field containing a ISO_8601 compliant date/time string of the expected instance termination time. See instautoctrl.StatusCheckResponse for exact definition. */
-  statusCheck?: Maybe<Scalars['String']['output']>;
-};
-
-/** Optional urls for advanced integration features. */
-export type CustomizationUrlsInput = {
-  /** URL to which POST an archive with the contents found (at instance termination) in Template.ContainerStartupOptions.ContentPath. */
-  contentDestination?: InputMaybe<Scalars['String']['input']>;
-  /** URL from which GET the archive to be extracted into Template.ContainerStartupOptions.ContentPath. This field, if set, OVERRIDES Template.ContainerStartupOptions.SourceArchiveURL. */
-  contentOrigin?: InputMaybe<Scalars['String']['input']>;
-  /** URL which is periodically checked (with a GET request) to determine automatic instance shutdown. Should return any 2xx status code if the instance has to keep running, any 4xx otherwise. In case of 2xx response, it should output a JSON with a `deadline` field containing a ISO_8601 compliant date/time string of the expected instance termination time. See instautoctrl.StatusCheckResponse for exact definition. */
-  statusCheck?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** Environment defines the characteristics of an environment composing the Template. */
 export type EnvironmentListListItem = {
   __typename?: 'EnvironmentListListItem';
@@ -116,8 +95,6 @@ export type EnvironmentListListItem = {
   guiEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** The VM or container to be started when instantiating the environment. */
   image: Scalars['String']['output'];
-  /** The mode associated with the environment (Standard, Exam, Exercise) */
-  mode?: Maybe<Mode>;
   /** Whether the instance has to have the user's MyDrive volume */
   mountMyDriveVolume: Scalars['Boolean']['output'];
   /**
@@ -157,8 +134,6 @@ export type EnvironmentListListItemInput = {
   guiEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   /** The VM or container to be started when instantiating the environment. */
   image: Scalars['String']['input'];
-  /** The mode associated with the environment (Standard, Exam, Exercise) */
-  mode?: InputMaybe<Mode>;
   /** Whether the instance has to have the user's MyDrive volume */
   mountMyDriveVolume: Scalars['Boolean']['input'];
   /**
@@ -651,12 +626,6 @@ export type ItPolitoCrownlabsV1alpha1ImageListList = {
   metadata?: Maybe<IoK8sApimachineryPkgApisMetaV1ListMeta>;
 };
 
-export type ItPolitoCrownlabsV1alpha1ImageListUpdate = {
-  __typename?: 'ItPolitoCrownlabsV1alpha1ImageListUpdate';
-  payload?: Maybe<ItPolitoCrownlabsV1alpha1ImageList>;
-  updateType?: Maybe<UpdateType>;
-};
-
 /** Workspace describes a workspace in CrownLabs. */
 export type ItPolitoCrownlabsV1alpha1Workspace = {
   __typename?: 'ItPolitoCrownlabsV1alpha1Workspace';
@@ -697,12 +666,6 @@ export type ItPolitoCrownlabsV1alpha1WorkspaceList = {
   kind?: Maybe<Scalars['String']['output']>;
   /** ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}. */
   metadata?: Maybe<IoK8sApimachineryPkgApisMetaV1ListMeta>;
-};
-
-export type ItPolitoCrownlabsV1alpha1WorkspaceUpdate = {
-  __typename?: 'ItPolitoCrownlabsV1alpha1WorkspaceUpdate';
-  payload?: Maybe<ItPolitoCrownlabsV1alpha1Workspace>;
-  updateType?: Maybe<UpdateType>;
 };
 
 /** Instance describes the instance of a CrownLabs environment Template. */
@@ -787,12 +750,6 @@ export type ItPolitoCrownlabsV1alpha2InstanceSnapshotList = {
   kind?: Maybe<Scalars['String']['output']>;
   /** ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}. */
   metadata?: Maybe<IoK8sApimachineryPkgApisMetaV1ListMeta>;
-};
-
-export type ItPolitoCrownlabsV1alpha2InstanceSnapshotUpdate = {
-  __typename?: 'ItPolitoCrownlabsV1alpha2InstanceSnapshotUpdate';
-  payload?: Maybe<ItPolitoCrownlabsV1alpha2InstanceSnapshot>;
-  updateType?: Maybe<UpdateType>;
 };
 
 export type ItPolitoCrownlabsV1alpha2InstanceUpdate = {
@@ -933,12 +890,6 @@ export type ItPolitoCrownlabsV1alpha2TenantList = {
   metadata?: Maybe<IoK8sApimachineryPkgApisMetaV1ListMeta>;
 };
 
-export type ItPolitoCrownlabsV1alpha2TenantUpdate = {
-  __typename?: 'ItPolitoCrownlabsV1alpha2TenantUpdate';
-  payload?: Maybe<ItPolitoCrownlabsV1alpha2Tenant>;
-  updateType?: Maybe<UpdateType>;
-};
-
 /** The status of Keycloak authentication flow */
 export type Keycloak = {
   __typename?: 'Keycloak';
@@ -987,12 +938,6 @@ export type Label = {
   key: Scalars['String']['output'];
   value: Scalars['String']['output'];
 };
-
-export enum Mode {
-  Exam = 'Exam',
-  Exercise = 'Exercise',
-  Standard = 'Standard'
-}
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -2152,10 +2097,7 @@ export type PersonalNamespaceInput = {
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
-/**
- * The amount of resources associated with the Tenant's
- * personal workspace. If defined, the personal workspace is enabled.
- */
+/** The amount of resources associated with the Tenant's personal workspace. If defined, the personal workspace is enabled. */
 export type PersonalWorkspace = {
   __typename?: 'PersonalWorkspace';
   /** The maximum amount of CPU required by this Workspace. */
@@ -2166,10 +2108,7 @@ export type PersonalWorkspace = {
   memory: Scalars['JSON']['output'];
 };
 
-/**
- * The amount of resources associated with the Tenant's
- * personal workspace. If defined, the personal workspace is enabled.
- */
+/** The amount of resources associated with the Tenant's personal workspace. If defined, the personal workspace is enabled. */
 export type PersonalWorkspaceInput = {
   /** The maximum amount of CPU required by this Workspace. */
   cpu: Scalars['JSON']['input'];
@@ -2298,7 +2237,7 @@ export type PublicExposure = {
    * If 'Port' is set to 0, a random port from the ephemeral range will be assigned.
    * If no ports are specified, the service will not be exposed with a LoadBalancer
    */
-  ports: Array<Maybe<PortsListItem>>;
+  ports?: Maybe<Array<Maybe<PortsListItem>>>;
 };
 
 /** The status of the Instance service exposure, if any. */
@@ -2337,7 +2276,7 @@ export type PublicExposureInput = {
    * If 'Port' is set to 0, a random port from the ephemeral range will be assigned.
    * If no ports are specified, the service will not be exposed with a LoadBalancer
    */
-  ports: Array<InputMaybe<PortsListItemInput>>;
+  ports?: InputMaybe<Array<InputMaybe<PortsListItemInput>>>;
 };
 
 export type Query = {
@@ -2776,51 +2715,9 @@ export type Quota = {
   /** The maximum amount of CPU required by this Workspace. */
   cpu: Scalars['JSON']['output'];
   /** The maximum number of concurrent instances required by this Workspace. */
-  instances: Scalars['Int']['output'];
+  instances: Scalars['BigInt']['output'];
   /** The maximum amount of RAM memory required by this Workspace. */
   memory: Scalars['JSON']['output'];
-};
-
-/** The amount of resources associated with this Tenant, if defined it overrides the one computed from the workspaces the tenant is enrolled in. */
-export type Quota2 = {
-  __typename?: 'Quota2';
-  /** The maximum amount of CPU which can be used by this Tenant. */
-  cpu: Scalars['JSON']['output'];
-  /** The maximum number of concurrent instances which can be created by this Tenant. */
-  instances: Scalars['Int']['output'];
-  /** The maximum amount of RAM memory which can be used by this Tenant. */
-  memory: Scalars['JSON']['output'];
-};
-
-/** The amount of resources associated with this Tenant, if defined it overrides the one computed from the workspaces the tenant is enrolled in. */
-export type Quota2Input = {
-  /** The maximum amount of CPU which can be used by this Tenant. */
-  cpu: Scalars['JSON']['input'];
-  /** The maximum number of concurrent instances which can be created by this Tenant. */
-  instances: Scalars['Int']['input'];
-  /** The maximum amount of RAM memory which can be used by this Tenant. */
-  memory: Scalars['JSON']['input'];
-};
-
-/** The amount of resources associated with this Tenant, either inherited from the Workspaces in which he/she is enrolled, or manually overridden. */
-export type Quota3 = {
-  __typename?: 'Quota3';
-  /** The maximum amount of CPU which can be used by this Tenant. */
-  cpu: Scalars['JSON']['output'];
-  /** The maximum number of concurrent instances which can be created by this Tenant. */
-  instances: Scalars['Int']['output'];
-  /** The maximum amount of RAM memory which can be used by this Tenant. */
-  memory: Scalars['JSON']['output'];
-};
-
-/** The amount of resources associated with this Tenant, either inherited from the Workspaces in which he/she is enrolled, or manually overridden. */
-export type Quota3Input = {
-  /** The maximum amount of CPU which can be used by this Tenant. */
-  cpu: Scalars['JSON']['input'];
-  /** The maximum number of concurrent instances which can be created by this Tenant. */
-  instances: Scalars['Int']['input'];
-  /** The maximum amount of RAM memory which can be used by this Tenant. */
-  memory: Scalars['JSON']['input'];
 };
 
 /** The amount of resources associated with this workspace, and inherited by enrolled tenants. */
@@ -2828,7 +2725,7 @@ export type QuotaInput = {
   /** The maximum amount of CPU required by this Workspace. */
   cpu: Scalars['JSON']['input'];
   /** The maximum number of concurrent instances required by this Workspace. */
-  instances: Scalars['Int']['input'];
+  instances: Scalars['BigInt']['input'];
   /** The maximum amount of RAM memory required by this Workspace. */
   memory: Scalars['JSON']['input'];
 };
@@ -3005,8 +2902,6 @@ export type Spec2Input = {
 export type Spec3 = {
   __typename?: 'Spec3';
   contentUrls?: Maybe<Scalars['JSON']['output']>;
-  /** Optional urls for advanced integration features. */
-  customizationUrls?: Maybe<CustomizationUrls>;
   /** Labels that are used for the selection of the node. */
   nodeSelector?: Maybe<Scalars['JSON']['output']>;
   /**
@@ -3032,7 +2927,7 @@ export type Spec3 = {
    * subsequent recreation without data loss.
    */
   running?: Maybe<Scalars['Boolean']['output']>;
-  /** Optional urls for advanced integration features. */
+  /** StatusCheckURL urls for advanced integration features. */
   statusCheckUrl?: Maybe<Scalars['String']['output']>;
   /** The reference to the Template to be instantiated. */
   templateCrownlabsPolitoItTemplateRef: TemplateCrownlabsPolitoItTemplateRef;
@@ -3043,8 +2938,6 @@ export type Spec3 = {
 /** InstanceSpec is the specification of the desired state of the Instance. */
 export type Spec3Input = {
   contentUrls?: InputMaybe<Scalars['JSON']['input']>;
-  /** Optional urls for advanced integration features. */
-  customizationUrls?: InputMaybe<CustomizationUrlsInput>;
   /** Labels that are used for the selection of the node. */
   nodeSelector?: InputMaybe<Scalars['JSON']['input']>;
   /**
@@ -3070,7 +2963,7 @@ export type Spec3Input = {
    * subsequent recreation without data loss.
    */
   running?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Optional urls for advanced integration features. */
+  /** StatusCheckURL urls for advanced integration features. */
   statusCheckUrl?: InputMaybe<Scalars['String']['input']>;
   /** The reference to the Template to be instantiated. */
   templateCrownlabsPolitoItTemplateRef: TemplateCrownlabsPolitoItTemplateRefInput;
@@ -3144,7 +3037,10 @@ export type Spec6 = {
   deleteAfter?: Maybe<Scalars['String']['output']>;
   /** A textual description of the Template. */
   description: Scalars['String']['output'];
-  /** The list of environments (i.e. VMs or containers) that compose the Template. */
+  /**
+   * The list of environments (i.e. VMs or containers) that compose the Template.
+   * Each environment must have a unique name within the Template.
+   */
   environmentList: Array<Maybe<EnvironmentListListItem>>;
   /**
    * The maximum period of inactivity after which an Instance referencing
@@ -3179,7 +3075,10 @@ export type Spec6Input = {
   deleteAfter?: InputMaybe<Scalars['String']['input']>;
   /** A textual description of the Template. */
   description: Scalars['String']['input'];
-  /** The list of environments (i.e. VMs or containers) that compose the Template. */
+  /**
+   * The list of environments (i.e. VMs or containers) that compose the Template.
+   * Each environment must have a unique name within the Template.
+   */
   environmentList: Array<InputMaybe<EnvironmentListListItemInput>>;
   /**
    * The maximum period of inactivity after which an Instance referencing
@@ -3204,8 +3103,6 @@ export type Spec6Input = {
 /** TenantSpec is the specification of the desired state of the Tenant. */
 export type Spec7 = {
   __typename?: 'Spec7';
-  /** Whether a personal workspace should be created for the tenant */
-  createPersonalWorkspace?: Maybe<Scalars['Boolean']['output']>;
   /**
    * Whether a sandbox namespace should be created to allow the Tenant play
    * with Kubernetes.
@@ -3222,18 +3119,13 @@ export type Spec7 = {
   lastLogin?: Maybe<Scalars['String']['output']>;
   /** The last name of the Tenant. */
   lastName: Scalars['String']['output'];
-  /**
-   * The amount of resources associated with the Tenant's
-   * personal workspace. If defined, the personal workspace is enabled.
-   */
+  /** The amount of resources associated with the Tenant's personal workspace. If defined, the personal workspace is enabled. */
   personalWorkspace?: Maybe<PersonalWorkspace>;
   /**
    * The list of the SSH public keys associated with the Tenant. These will be
    * used to enable to access the remote environments through the SSH protocol.
    */
   publicKeys?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  /** The amount of resources associated with this Tenant, if defined it overrides the one computed from the workspaces the tenant is enrolled in. */
-  quota?: Maybe<Quota2>;
   /**
    * The list of the Workspaces the Tenant is subscribed to, along with his/her
    * role in each of them.
@@ -3243,8 +3135,6 @@ export type Spec7 = {
 
 /** TenantSpec is the specification of the desired state of the Tenant. */
 export type Spec7Input = {
-  /** Whether a personal workspace should be created for the tenant */
-  createPersonalWorkspace?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Whether a sandbox namespace should be created to allow the Tenant play
    * with Kubernetes.
@@ -3261,18 +3151,13 @@ export type Spec7Input = {
   lastLogin?: InputMaybe<Scalars['String']['input']>;
   /** The last name of the Tenant. */
   lastName: Scalars['String']['input'];
-  /**
-   * The amount of resources associated with the Tenant's
-   * personal workspace. If defined, the personal workspace is enabled.
-   */
+  /** The amount of resources associated with the Tenant's personal workspace. If defined, the personal workspace is enabled. */
   personalWorkspace?: InputMaybe<PersonalWorkspaceInput>;
   /**
    * The list of the SSH public keys associated with the Tenant. These will be
    * used to enable to access the remote environments through the SSH protocol.
    */
   publicKeys?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** The amount of resources associated with this Tenant, if defined it overrides the one computed from the workspaces the tenant is enrolled in. */
-  quota?: InputMaybe<Quota2Input>;
   /**
    * The list of the Workspaces the Tenant is subscribed to, along with his/her
    * role in each of them.
@@ -3338,23 +3223,8 @@ export type Status2Input = {
 /** InstanceStatus reflects the most recently observed status of the Instance. */
 export type Status3 = {
   __typename?: 'Status3';
-  /** Timestamps of the Instance automation phases (check, termination and submission). */
-  automation?: Maybe<Automation>;
   /** Environments contains the status of the instance's environments. */
   environments?: Maybe<Array<Maybe<EnvironmentsListItem>>>;
-  /**
-   * The amount of time the Instance required to become ready for the first time
-   * upon creation.
-   */
-  initialReadyTime?: Maybe<Scalars['String']['output']>;
-  /**
-   * The internal IP address associated with the remote environment, which can
-   * be used to access it through the SSH protocol (leveraging the SSH bastion
-   * in case it is not contacted from another CrownLabs Instance).
-   */
-  ip?: Maybe<Scalars['String']['output']>;
-  /** URL where the MyDrive is deployed */
-  myDriveUrl?: Maybe<Scalars['String']['output']>;
   /** The node on which the Instance is running. */
   nodeName?: Maybe<Scalars['String']['output']>;
   /** The actual nodeSelector assigned to the Instance. */
@@ -3373,23 +3243,8 @@ export type Status3 = {
 
 /** InstanceStatus reflects the most recently observed status of the Instance. */
 export type Status3Input = {
-  /** Timestamps of the Instance automation phases (check, termination and submission). */
-  automation?: InputMaybe<AutomationInput>;
   /** Environments contains the status of the instance's environments. */
   environments?: InputMaybe<Array<InputMaybe<EnvironmentsListItemInput>>>;
-  /**
-   * The amount of time the Instance required to become ready for the first time
-   * upon creation.
-   */
-  initialReadyTime?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * The internal IP address associated with the remote environment, which can
-   * be used to access it through the SSH protocol (leveraging the SSH bastion
-   * in case it is not contacted from another CrownLabs Instance).
-   */
-  ip?: InputMaybe<Scalars['String']['input']>;
-  /** URL where the MyDrive is deployed */
-  myDriveUrl?: InputMaybe<Scalars['String']['input']>;
   /** The node on which the Instance is running. */
   nodeName?: InputMaybe<Scalars['String']['input']>;
   /** The actual nodeSelector assigned to the Instance. */
@@ -3450,7 +3305,7 @@ export type Status7 = {
    */
   failingWorkspaces?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The status of Keycloak authentication flow */
-  keycloak?: Maybe<Keycloak>;
+  keycloak: Keycloak;
   /**
    * The namespace containing all CrownLabs related objects of the Tenant.
    * This is the namespace that groups his/her own Instances, together with
@@ -3459,9 +3314,7 @@ export type Status7 = {
    */
   personalNamespace: PersonalNamespace;
   /** Whether a personal workspace has been created for the tenant. */
-  personalWorkspaceCreated?: Maybe<Scalars['Boolean']['output']>;
-  /** The amount of resources associated with this Tenant, either inherited from the Workspaces in which he/she is enrolled, or manually overridden. */
-  quota?: Maybe<Quota3>;
+  personalWorkspaceCreated: Scalars['Boolean']['output'];
   /**
    * Whether all subscriptions and resource creations succeeded or an error
    * occurred. In case of errors, the other status fields provide additional
@@ -3491,7 +3344,7 @@ export type Status7Input = {
    */
   failingWorkspaces?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The status of Keycloak authentication flow */
-  keycloak?: InputMaybe<KeycloakInput>;
+  keycloak: KeycloakInput;
   /**
    * The namespace containing all CrownLabs related objects of the Tenant.
    * This is the namespace that groups his/her own Instances, together with
@@ -3500,9 +3353,7 @@ export type Status7Input = {
    */
   personalNamespace: PersonalNamespaceInput;
   /** Whether a personal workspace has been created for the tenant. */
-  personalWorkspaceCreated?: InputMaybe<Scalars['Boolean']['input']>;
-  /** The amount of resources associated with this Tenant, either inherited from the Workspaces in which he/she is enrolled, or manually overridden. */
-  quota?: InputMaybe<Quota3Input>;
+  personalWorkspaceCreated: Scalars['Boolean']['input'];
   /**
    * Whether all subscriptions and resource creations succeeded or an error
    * occurred. In case of errors, the other status fields provide additional
@@ -3525,36 +3376,14 @@ export type Status7Input = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  itPolitoCrownlabsV1alpha1ImageListUpdate?: Maybe<ItPolitoCrownlabsV1alpha1ImageListUpdate>;
-  itPolitoCrownlabsV1alpha1WorkspaceUpdate?: Maybe<ItPolitoCrownlabsV1alpha1WorkspaceUpdate>;
   itPolitoCrownlabsV1alpha2InstanceLabelsUpdate?: Maybe<ItPolitoCrownlabsV1alpha2InstanceUpdate>;
-  itPolitoCrownlabsV1alpha2InstanceSnapshotUpdate?: Maybe<ItPolitoCrownlabsV1alpha2InstanceSnapshotUpdate>;
   itPolitoCrownlabsV1alpha2InstanceUpdate?: Maybe<ItPolitoCrownlabsV1alpha2InstanceUpdate>;
   itPolitoCrownlabsV1alpha2TemplateUpdate?: Maybe<ItPolitoCrownlabsV1alpha2TemplateUpdate>;
-  itPolitoCrownlabsV1alpha2TenantUpdate?: Maybe<ItPolitoCrownlabsV1alpha2TenantUpdate>;
-};
-
-
-export type SubscriptionItPolitoCrownlabsV1alpha1ImageListUpdateArgs = {
-  name?: InputMaybe<Scalars['String']['input']>;
-  namespace: Scalars['String']['input'];
-};
-
-
-export type SubscriptionItPolitoCrownlabsV1alpha1WorkspaceUpdateArgs = {
-  name?: InputMaybe<Scalars['String']['input']>;
-  namespace: Scalars['String']['input'];
 };
 
 
 export type SubscriptionItPolitoCrownlabsV1alpha2InstanceLabelsUpdateArgs = {
   labelSelector?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type SubscriptionItPolitoCrownlabsV1alpha2InstanceSnapshotUpdateArgs = {
-  name?: InputMaybe<Scalars['String']['input']>;
-  namespace: Scalars['String']['input'];
 };
 
 
@@ -3567,12 +3396,6 @@ export type SubscriptionItPolitoCrownlabsV1alpha2InstanceUpdateArgs = {
 export type SubscriptionItPolitoCrownlabsV1alpha2TemplateUpdateArgs = {
   name?: InputMaybe<Scalars['String']['input']>;
   namespace: Scalars['String']['input'];
-};
-
-
-export type SubscriptionItPolitoCrownlabsV1alpha2TenantUpdateArgs = {
-  name: Scalars['String']['input'];
-  namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The reference to the Template to be instantiated. */
@@ -3614,7 +3437,6 @@ export type TenantCrownlabsPolitoItTenantRef = {
    * empty in case of cluster-wide resources.
    */
   namespace?: Maybe<Scalars['String']['output']>;
-  tenantV1alpha2Wrapper?: Maybe<TenantV1alpha2Wrapper>;
 };
 
 /** The reference to the Tenant which owns the Instance object. */
@@ -3626,11 +3448,6 @@ export type TenantCrownlabsPolitoItTenantRefInput = {
    * empty in case of cluster-wide resources.
    */
   namespace?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type TenantV1alpha2Wrapper = {
-  __typename?: 'TenantV1alpha2Wrapper';
-  itPolitoCrownlabsV1alpha2Tenant?: Maybe<ItPolitoCrownlabsV1alpha2Tenant>;
 };
 
 export enum UpdateType {
@@ -3685,11 +3502,6 @@ export type WorkspaceCrownlabsPolitoItWorkspaceRefInput = {
   namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type WorkspaceWrapperTenantV1alpha2 = {
-  __typename?: 'WorkspaceWrapperTenantV1alpha2';
-  itPolitoCrownlabsV1alpha1Workspace?: Maybe<ItPolitoCrownlabsV1alpha1Workspace>;
-};
-
 /**
  * TenantWorkspaceEntry contains the information regarding one of the Workspaces
  * the Tenant is subscribed to, including his/her role.
@@ -3700,7 +3512,6 @@ export type WorkspacesListItem = {
   name: Scalars['String']['output'];
   /** The role of the Tenant in the context of the Workspace. */
   role: Role;
-  workspaceWrapperTenantV1alpha2?: Maybe<WorkspaceWrapperTenantV1alpha2>;
 };
 
 /**
@@ -3722,7 +3533,7 @@ export type ApplyInstanceMutationVariables = Exact<{
 }>;
 
 
-export type ApplyInstanceMutation = { __typename?: 'Mutation', applyInstance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports: Array<{ __typename?: 'PortsListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> } | null } | null } | null };
+export type ApplyInstanceMutation = { __typename?: 'Mutation', applyInstance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports?: Array<{ __typename?: 'PortsListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null } | null } | null };
 
 export type ApplySharedVolumeMutationVariables = Exact<{
   workspaceNamespace: Scalars['String']['input'];
@@ -3772,15 +3583,6 @@ export type ApplyTenantJsonPatchJsonMutationVariables = Exact<{
 
 export type ApplyTenantJsonPatchJsonMutation = { __typename?: 'Mutation', applyTenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, spec?: { __typename?: 'Spec7', firstName: string, lastName: string, email: string, lastLogin?: string | null, workspaces?: Array<{ __typename?: 'WorkspacesListItem', role: Role, name: string } | null> | null } | null } | null };
 
-export type ApplyWorkspaceMutationVariables = Exact<{
-  name: Scalars['String']['input'];
-  patchJson: Scalars['String']['input'];
-  manager: Scalars['String']['input'];
-}>;
-
-
-export type ApplyWorkspaceMutation = { __typename?: 'Mutation', applyWorkspace?: { __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null } | null, spec?: { __typename?: 'Spec2', prettyName: string, autoEnroll?: AutoEnroll | null, quota: { __typename?: 'Quota', cpu: any, memory: any, instances: number } } | null } | null };
-
 export type CreateInstanceMutationVariables = Exact<{
   tenantNamespace: Scalars['String']['input'];
   templateId: Scalars['String']['input'];
@@ -3791,7 +3593,7 @@ export type CreateInstanceMutationVariables = Exact<{
 }>;
 
 
-export type CreateInstanceMutation = { __typename?: 'Mutation', createdInstance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null, labels?: any | null } | null, status?: { __typename?: 'Status3', ip?: string | null, phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, ip?: string | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, nodeSelector?: any | null, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType } | null> } | null } | null } | null } } | null } | null };
+export type CreateInstanceMutation = { __typename?: 'Mutation', createdInstance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null, labels?: any | null } | null, status?: { __typename?: 'Status3', phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, nodeSelector?: any | null, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType } | null> } | null } | null } | null } } | null } | null };
 
 export type CreateSharedVolumeMutationVariables = Exact<{
   workspaceNamespace: Scalars['String']['input'];
@@ -3818,18 +3620,6 @@ export type CreateTemplateMutationVariables = Exact<{
 
 
 export type CreateTemplateMutation = { __typename?: 'Mutation', createdTemplate?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, deleteAfter?: string | null, inactivityTimeout?: string | null, allowPublicExposure?: boolean | null, nodeSelector?: any | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, resources: { __typename?: 'Resources', cpu: number, disk?: any | null, memory: any, reservedCPUPercentage: number } } | null> } | null, metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null } | null } | null };
-
-export type CreateWorkspaceMutationVariables = Exact<{
-  name: Scalars['String']['input'];
-  prettyName: Scalars['String']['input'];
-  autoEnroll?: InputMaybe<AutoEnroll>;
-  cpu: Scalars['JSON']['input'];
-  memory: Scalars['JSON']['input'];
-  instances: Scalars['Int']['input'];
-}>;
-
-
-export type CreateWorkspaceMutation = { __typename?: 'Mutation', createdWorkspace?: { __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', spec?: { __typename?: 'Spec2', prettyName: string, autoEnroll?: AutoEnroll | null, quota: { __typename?: 'Quota', cpu: any, memory: any, instances: number } } | null, metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null } | null } | null };
 
 export type DeleteInstanceMutationVariables = Exact<{
   tenantNamespace: Scalars['String']['input'];
@@ -3863,18 +3653,6 @@ export type DeleteTemplateMutationVariables = Exact<{
 
 export type DeleteTemplateMutation = { __typename?: 'Mutation', deletedTemplate?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1Status', kind?: string | null } | null };
 
-export type DeleteWorkspaceMutationVariables = Exact<{
-  name: Scalars['String']['input'];
-}>;
-
-
-export type DeleteWorkspaceMutation = { __typename?: 'Mutation', deletedWorkspace?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1Status', kind?: string | null } | null };
-
-export type AllTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllTemplatesQuery = { __typename?: 'Query', allTemplates?: { __typename?: 'ItPolitoCrownlabsV1alpha2TemplateList', items: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha2Template', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null } | null } | null> } | null };
-
 export type ImagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3885,14 +3663,14 @@ export type OwnedInstancesQueryVariables = Exact<{
 }>;
 
 
-export type OwnedInstancesQuery = { __typename?: 'Query', instanceList?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceList', instances: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null, labels?: any | null } | null, status?: { __typename?: 'Status3', ip?: string | null, phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, ip?: string | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports: Array<{ __typename?: 'PortsListItem', name: string, port: number, targetPort: number, protocol?: Protocol | null } | null> } | null, tenantCrownlabsPolitoItTenantRef: { __typename?: 'TenantCrownlabsPolitoItTenantRef', name: string, tenantV1alpha2Wrapper?: { __typename?: 'TenantV1alpha2Wrapper', itPolitoCrownlabsV1alpha2Tenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', spec?: { __typename?: 'Spec7', firstName: string, lastName: string } | null } | null } | null }, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType, resources: { __typename?: 'Resources', cpu: number, memory: any, disk?: any | null } } | null> } | null } | null } | null } } | null } | null> } | null };
+export type OwnedInstancesQuery = { __typename?: 'Query', instanceList?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceList', instances: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null, labels?: any | null } | null, status?: { __typename?: 'Status3', phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports?: Array<{ __typename?: 'PortsListItem', name: string, port: number, targetPort: number, protocol?: Protocol | null } | null> | null } | null, tenantCrownlabsPolitoItTenantRef: { __typename?: 'TenantCrownlabsPolitoItTenantRef', name: string }, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType, resources: { __typename?: 'Resources', cpu: number, memory: any, disk?: any | null } } | null> } | null } | null } | null } } | null } | null> } | null };
 
 export type InstancesLabelSelectorQueryVariables = Exact<{
   labels?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type InstancesLabelSelectorQuery = { __typename?: 'Query', instanceList?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceList', instances: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null } | null, status?: { __typename?: 'Status3', ip?: string | null, phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, ip?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports: Array<{ __typename?: 'PortsListItem', name: string, port: number, targetPort: number, protocol?: Protocol | null } | null> } | null, tenantCrownlabsPolitoItTenantRef: { __typename?: 'TenantCrownlabsPolitoItTenantRef', name: string, tenantV1alpha2Wrapper?: { __typename?: 'TenantV1alpha2Wrapper', itPolitoCrownlabsV1alpha2Tenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', spec?: { __typename?: 'Spec7', firstName: string, lastName: string } | null } | null } | null }, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType } | null> } | null } | null } | null } } | null } | null> } | null };
+export type InstancesLabelSelectorQuery = { __typename?: 'Query', instanceList?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceList', instances: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null } | null, status?: { __typename?: 'Status3', phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports?: Array<{ __typename?: 'PortsListItem', name: string, port: number, targetPort: number, protocol?: Protocol | null } | null> | null } | null, tenantCrownlabsPolitoItTenantRef: { __typename?: 'TenantCrownlabsPolitoItTenantRef', name: string }, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType } | null> } | null } | null } | null } } | null } | null> } | null };
 
 export type NodesLabelsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3918,7 +3696,7 @@ export type TenantQueryVariables = Exact<{
 }>;
 
 
-export type TenantQuery = { __typename?: 'Query', tenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', spec?: { __typename?: 'Spec7', email: string, firstName: string, lastName: string, lastLogin?: string | null, publicKeys?: Array<string | null> | null, personalWorkspace?: { __typename?: 'PersonalWorkspace', cpu: any, instances: any, memory: any } | null, workspaces?: Array<{ __typename?: 'WorkspacesListItem', role: Role, name: string, workspaceWrapperTenantV1alpha2?: { __typename?: 'WorkspaceWrapperTenantV1alpha2', itPolitoCrownlabsV1alpha1Workspace?: { __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', spec?: { __typename?: 'Spec2', prettyName: string, quota: { __typename?: 'Quota', cpu: any, instances: number, memory: any } } | null, status?: { __typename?: 'Status2', namespace?: { __typename?: 'Namespace', name?: string | null } | null } | null } | null } | null } | null> | null } | null, metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, status?: { __typename?: 'Status7', personalNamespace: { __typename?: 'PersonalNamespace', name?: string | null, created: boolean } } | null } | null };
+export type TenantQuery = { __typename?: 'Query', tenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', spec?: { __typename?: 'Spec7', email: string, firstName: string, lastName: string, lastLogin?: string | null, publicKeys?: Array<string | null> | null, personalWorkspace?: { __typename?: 'PersonalWorkspace', cpu: any, instances: any, memory: any } | null, workspaces?: Array<{ __typename?: 'WorkspacesListItem', role: Role, name: string } | null> | null } | null, metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, status?: { __typename?: 'Status7', personalNamespace: { __typename?: 'PersonalNamespace', name?: string | null, created: boolean } } | null } | null };
 
 export type TenantsQueryVariables = Exact<{
   labels?: InputMaybe<Scalars['String']['input']>;
@@ -3928,26 +3706,19 @@ export type TenantsQueryVariables = Exact<{
 
 export type TenantsQuery = { __typename?: 'Query', tenants?: { __typename?: 'ItPolitoCrownlabsV1alpha2TenantList', items: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, spec?: { __typename?: 'Spec7', firstName: string, lastName: string, email: string, workspaces?: Array<{ __typename?: 'WorkspacesListItem', role: Role, name: string } | null> | null } | null } | null> } | null };
 
-export type WorkspaceQueryVariables = Exact<{
-  name: Scalars['String']['input'];
-}>;
-
-
-export type WorkspaceQuery = { __typename?: 'Query', workspace?: { __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, labels?: any | null } | null, spec?: { __typename?: 'Spec2', prettyName: string, autoEnroll?: AutoEnroll | null } | null } | null };
-
 export type WorkspaceQuotasQueryVariables = Exact<{
   names?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
-export type WorkspaceQuotasQuery = { __typename?: 'Query', workspaces?: { __typename?: 'ItPolitoCrownlabsV1alpha1WorkspaceList', items: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, spec?: { __typename?: 'Spec2', prettyName: string, quota: { __typename?: 'Quota', cpu: any, memory: any, instances: number } } | null } | null> } | null };
+export type WorkspaceQuotasQuery = { __typename?: 'Query', workspaces?: { __typename?: 'ItPolitoCrownlabsV1alpha1WorkspaceList', items: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, spec?: { __typename?: 'Spec2', prettyName: string, quota: { __typename?: 'Quota', cpu: any, memory: any, instances: any } } | null } | null> } | null };
 
 export type WorkspacesQueryVariables = Exact<{
   labels?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type WorkspacesQuery = { __typename?: 'Query', workspaces?: { __typename?: 'ItPolitoCrownlabsV1alpha1WorkspaceList', items: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, deletionTimestamp?: string | null } | null, spec?: { __typename?: 'Spec2', prettyName: string, autoEnroll?: AutoEnroll | null, quota: { __typename?: 'Quota', cpu: any, memory: any, instances: number } } | null } | null> } | null };
+export type WorkspacesQuery = { __typename?: 'Query', workspaces?: { __typename?: 'ItPolitoCrownlabsV1alpha1WorkspaceList', items: Array<{ __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, spec?: { __typename?: 'Spec2', prettyName: string, autoEnroll?: AutoEnroll | null } | null } | null> } | null };
 
 export type UpdatedOwnedInstancesSubscriptionVariables = Exact<{
   tenantNamespace: Scalars['String']['input'];
@@ -3955,14 +3726,14 @@ export type UpdatedOwnedInstancesSubscriptionVariables = Exact<{
 }>;
 
 
-export type UpdatedOwnedInstancesSubscription = { __typename?: 'Subscription', updateInstance?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceUpdate', updateType?: UpdateType | null, instance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null, labels?: any | null } | null, status?: { __typename?: 'Status3', ip?: string | null, phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, ip?: string | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports: Array<{ __typename?: 'PortsListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> } | null, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType, resources: { __typename?: 'Resources', cpu: number, memory: any, disk?: any | null } } | null> } | null } | null } | null } } | null } | null } | null };
+export type UpdatedOwnedInstancesSubscription = { __typename?: 'Subscription', updateInstance?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceUpdate', updateType?: UpdateType | null, instance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null, labels?: any | null } | null, status?: { __typename?: 'Status3', phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports?: Array<{ __typename?: 'PortsListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType, resources: { __typename?: 'Resources', cpu: number, memory: any, disk?: any | null } } | null> } | null } | null } | null } } | null } | null } | null };
 
 export type UpdatedInstancesLabelSelectorSubscriptionVariables = Exact<{
   labels?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type UpdatedInstancesLabelSelectorSubscription = { __typename?: 'Subscription', updateInstanceLabelSelector?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceUpdate', updateType?: UpdateType | null, instance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null } | null, status?: { __typename?: 'Status3', ip?: string | null, phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, ip?: string | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports: Array<{ __typename?: 'PortsListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> } | null, tenantCrownlabsPolitoItTenantRef: { __typename?: 'TenantCrownlabsPolitoItTenantRef', name: string, tenantV1alpha2Wrapper?: { __typename?: 'TenantV1alpha2Wrapper', itPolitoCrownlabsV1alpha2Tenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', spec?: { __typename?: 'Spec7', firstName: string, lastName: string } | null } | null } | null }, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType } | null> } | null } | null } | null } } | null } | null } | null };
+export type UpdatedInstancesLabelSelectorSubscription = { __typename?: 'Subscription', updateInstanceLabelSelector?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceUpdate', updateType?: UpdateType | null, instance?: { __typename?: 'ItPolitoCrownlabsV1alpha2Instance', metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null, namespace?: string | null, creationTimestamp?: string | null } | null, status?: { __typename?: 'Status3', phase?: Phase2 | null, url?: string | null, nodeName?: string | null, nodeSelector?: any | null, publicExposure?: { __typename?: 'PublicExposure2', externalIP?: string | null, phase?: Phase3 | null, ports?: Array<{ __typename?: 'Ports2ListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, environments?: Array<{ __typename?: 'EnvironmentsListItem', name: string, phase?: Phase | null, initialReadyTime?: string | null } | null> | null } | null, spec?: { __typename?: 'Spec3', running?: boolean | null, prettyName?: string | null, publicExposure?: { __typename?: 'PublicExposure', ports?: Array<{ __typename?: 'PortsListItem', name: string, port: number, protocol?: Protocol | null, targetPort: number } | null> | null } | null, tenantCrownlabsPolitoItTenantRef: { __typename?: 'TenantCrownlabsPolitoItTenantRef', name: string }, templateCrownlabsPolitoItTemplateRef: { __typename?: 'TemplateCrownlabsPolitoItTemplateRef', name: string, namespace?: string | null, templateWrapper?: { __typename?: 'TemplateWrapper', itPolitoCrownlabsV1alpha2Template?: { __typename?: 'ItPolitoCrownlabsV1alpha2Template', spec?: { __typename?: 'Spec6', prettyName: string, description: string, allowPublicExposure?: boolean | null, environmentList: Array<{ __typename?: 'EnvironmentListListItem', name: string, guiEnabled?: boolean | null, persistent?: boolean | null, environmentType: EnvironmentType } | null> } | null } | null } | null } } | null } | null } | null };
 
 export type UpdatedWorkspaceTemplatesSubscriptionVariables = Exact<{
   workspaceNamespace: Scalars['String']['input'];
@@ -3977,7 +3748,7 @@ export type UpdatedTenantSubscriptionVariables = Exact<{
 }>;
 
 
-export type UpdatedTenantSubscription = { __typename?: 'Subscription', updatedTenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2TenantUpdate', updateType?: UpdateType | null, tenant?: { __typename?: 'ItPolitoCrownlabsV1alpha2Tenant', spec?: { __typename?: 'Spec7', email: string, firstName: string, lastName: string, lastLogin?: string | null, publicKeys?: Array<string | null> | null, personalWorkspace?: { __typename?: 'PersonalWorkspace', cpu: any, instances: any, memory: any } | null, workspaces?: Array<{ __typename?: 'WorkspacesListItem', role: Role, name: string, workspaceWrapperTenantV1alpha2?: { __typename?: 'WorkspaceWrapperTenantV1alpha2', itPolitoCrownlabsV1alpha1Workspace?: { __typename?: 'ItPolitoCrownlabsV1alpha1Workspace', spec?: { __typename?: 'Spec2', prettyName: string, quota: { __typename?: 'Quota', cpu: any, instances: number, memory: any } } | null, status?: { __typename?: 'Status2', namespace?: { __typename?: 'Namespace', name?: string | null } | null } | null } | null } | null } | null> | null } | null, metadata?: { __typename?: 'IoK8sApimachineryPkgApisMetaV1ObjectMeta', name?: string | null } | null, status?: { __typename?: 'Status7', personalNamespace: { __typename?: 'PersonalNamespace', name?: string | null, created: boolean } } | null } | null } | null };
+export type UpdatedTenantSubscription = { __typename?: 'Subscription', updatedInstance?: { __typename?: 'ItPolitoCrownlabsV1alpha2InstanceUpdate', updateType?: UpdateType | null } | null };
 
 
 export const ApplyInstanceDocument = gql`
@@ -4334,57 +4105,6 @@ export function useApplyTenantJsonPatchJsonMutation(baseOptions?: Apollo.Mutatio
 export type ApplyTenantJsonPatchJsonMutationHookResult = ReturnType<typeof useApplyTenantJsonPatchJsonMutation>;
 export type ApplyTenantJsonPatchJsonMutationResult = Apollo.MutationResult<ApplyTenantJsonPatchJsonMutation>;
 export type ApplyTenantJsonPatchJsonMutationOptions = Apollo.BaseMutationOptions<ApplyTenantJsonPatchJsonMutation, ApplyTenantJsonPatchJsonMutationVariables>;
-export const ApplyWorkspaceDocument = gql`
-    mutation applyWorkspace($name: String!, $patchJson: String!, $manager: String!) {
-  applyWorkspace: patchCrownlabsPolitoItV1alpha1WorkspaceJsonPatch(
-    name: $name
-    fieldManager: $manager
-    applicationJsonPatchJsonInput: $patchJson
-  ) {
-    metadata {
-      name
-      namespace
-    }
-    spec {
-      prettyName
-      autoEnroll
-      quota {
-        cpu
-        memory
-        instances
-      }
-    }
-  }
-}
-    `;
-export type ApplyWorkspaceMutationFn = Apollo.MutationFunction<ApplyWorkspaceMutation, ApplyWorkspaceMutationVariables>;
-
-/**
- * __useApplyWorkspaceMutation__
- *
- * To run a mutation, you first call `useApplyWorkspaceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useApplyWorkspaceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [applyWorkspaceMutation, { data, loading, error }] = useApplyWorkspaceMutation({
- *   variables: {
- *      name: // value for 'name'
- *      patchJson: // value for 'patchJson'
- *      manager: // value for 'manager'
- *   },
- * });
- */
-export function useApplyWorkspaceMutation(baseOptions?: Apollo.MutationHookOptions<ApplyWorkspaceMutation, ApplyWorkspaceMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ApplyWorkspaceMutation, ApplyWorkspaceMutationVariables>(ApplyWorkspaceDocument, options);
-      }
-export type ApplyWorkspaceMutationHookResult = ReturnType<typeof useApplyWorkspaceMutation>;
-export type ApplyWorkspaceMutationResult = Apollo.MutationResult<ApplyWorkspaceMutation>;
-export type ApplyWorkspaceMutationOptions = Apollo.BaseMutationOptions<ApplyWorkspaceMutation, ApplyWorkspaceMutationVariables>;
 export const CreateInstanceDocument = gql`
     mutation createInstance($tenantNamespace: String!, $templateId: String!, $workspaceNamespace: String!, $tenantId: String!, $generateName: String = "instance-", $nodeSelector: JSON) {
   createdInstance: createCrownlabsPolitoItV1alpha2NamespacedInstance(
@@ -4398,7 +4118,6 @@ export const CreateInstanceDocument = gql`
       labels
     }
     status {
-      ip
       phase
       url
       nodeName
@@ -4406,7 +4125,6 @@ export const CreateInstanceDocument = gql`
       environments {
         name
         phase
-        ip
         initialReadyTime
       }
     }
@@ -4583,58 +4301,6 @@ export function useCreateTemplateMutation(baseOptions?: Apollo.MutationHookOptio
 export type CreateTemplateMutationHookResult = ReturnType<typeof useCreateTemplateMutation>;
 export type CreateTemplateMutationResult = Apollo.MutationResult<CreateTemplateMutation>;
 export type CreateTemplateMutationOptions = Apollo.BaseMutationOptions<CreateTemplateMutation, CreateTemplateMutationVariables>;
-export const CreateWorkspaceDocument = gql`
-    mutation createWorkspace($name: String!, $prettyName: String!, $autoEnroll: AutoEnroll, $cpu: JSON!, $memory: JSON!, $instances: Int!) {
-  createdWorkspace: createCrownlabsPolitoItV1alpha1Workspace(
-    itPolitoCrownlabsV1alpha1WorkspaceInput: {kind: "Workspace", apiVersion: "crownlabs.polito.it/v1alpha1", spec: {prettyName: $prettyName, autoEnroll: $autoEnroll, quota: {cpu: $cpu, memory: $memory, instances: $instances}}, metadata: {name: $name}}
-  ) {
-    spec {
-      prettyName
-      autoEnroll
-      quota {
-        cpu
-        memory
-        instances
-      }
-    }
-    metadata {
-      name
-      namespace
-    }
-  }
-}
-    `;
-export type CreateWorkspaceMutationFn = Apollo.MutationFunction<CreateWorkspaceMutation, CreateWorkspaceMutationVariables>;
-
-/**
- * __useCreateWorkspaceMutation__
- *
- * To run a mutation, you first call `useCreateWorkspaceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateWorkspaceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createWorkspaceMutation, { data, loading, error }] = useCreateWorkspaceMutation({
- *   variables: {
- *      name: // value for 'name'
- *      prettyName: // value for 'prettyName'
- *      autoEnroll: // value for 'autoEnroll'
- *      cpu: // value for 'cpu'
- *      memory: // value for 'memory'
- *      instances: // value for 'instances'
- *   },
- * });
- */
-export function useCreateWorkspaceMutation(baseOptions?: Apollo.MutationHookOptions<CreateWorkspaceMutation, CreateWorkspaceMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateWorkspaceMutation, CreateWorkspaceMutationVariables>(CreateWorkspaceDocument, options);
-      }
-export type CreateWorkspaceMutationHookResult = ReturnType<typeof useCreateWorkspaceMutation>;
-export type CreateWorkspaceMutationResult = Apollo.MutationResult<CreateWorkspaceMutation>;
-export type CreateWorkspaceMutationOptions = Apollo.BaseMutationOptions<CreateWorkspaceMutation, CreateWorkspaceMutationVariables>;
 export const DeleteInstanceDocument = gql`
     mutation deleteInstance($tenantNamespace: String!, $instanceId: String!) {
   deletedInstance: deleteCrownlabsPolitoItV1alpha2NamespacedInstance(
@@ -4783,86 +4449,6 @@ export function useDeleteTemplateMutation(baseOptions?: Apollo.MutationHookOptio
 export type DeleteTemplateMutationHookResult = ReturnType<typeof useDeleteTemplateMutation>;
 export type DeleteTemplateMutationResult = Apollo.MutationResult<DeleteTemplateMutation>;
 export type DeleteTemplateMutationOptions = Apollo.BaseMutationOptions<DeleteTemplateMutation, DeleteTemplateMutationVariables>;
-export const DeleteWorkspaceDocument = gql`
-    mutation deleteWorkspace($name: String!) {
-  deletedWorkspace: deleteCrownlabsPolitoItV1alpha1Workspace(name: $name) {
-    kind
-  }
-}
-    `;
-export type DeleteWorkspaceMutationFn = Apollo.MutationFunction<DeleteWorkspaceMutation, DeleteWorkspaceMutationVariables>;
-
-/**
- * __useDeleteWorkspaceMutation__
- *
- * To run a mutation, you first call `useDeleteWorkspaceMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteWorkspaceMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteWorkspaceMutation, { data, loading, error }] = useDeleteWorkspaceMutation({
- *   variables: {
- *      name: // value for 'name'
- *   },
- * });
- */
-export function useDeleteWorkspaceMutation(baseOptions?: Apollo.MutationHookOptions<DeleteWorkspaceMutation, DeleteWorkspaceMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteWorkspaceMutation, DeleteWorkspaceMutationVariables>(DeleteWorkspaceDocument, options);
-      }
-export type DeleteWorkspaceMutationHookResult = ReturnType<typeof useDeleteWorkspaceMutation>;
-export type DeleteWorkspaceMutationResult = Apollo.MutationResult<DeleteWorkspaceMutation>;
-export type DeleteWorkspaceMutationOptions = Apollo.BaseMutationOptions<DeleteWorkspaceMutation, DeleteWorkspaceMutationVariables>;
-export const AllTemplatesDocument = gql`
-    query allTemplates {
-  allTemplates: listCrownlabsPolitoItV1alpha2TemplateForAllNamespaces {
-    items {
-      metadata {
-        name
-        namespace
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useAllTemplatesQuery__
- *
- * To run a query within a React component, call `useAllTemplatesQuery` and pass it any options that fit your needs.
- * When your component renders, `useAllTemplatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAllTemplatesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAllTemplatesQuery(baseOptions?: Apollo.QueryHookOptions<AllTemplatesQuery, AllTemplatesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllTemplatesQuery, AllTemplatesQueryVariables>(AllTemplatesDocument, options);
-      }
-export function useAllTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllTemplatesQuery, AllTemplatesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllTemplatesQuery, AllTemplatesQueryVariables>(AllTemplatesDocument, options);
-        }
-// @ts-ignore
-export function useAllTemplatesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AllTemplatesQuery, AllTemplatesQueryVariables>): Apollo.UseSuspenseQueryResult<AllTemplatesQuery, AllTemplatesQueryVariables>;
-export function useAllTemplatesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AllTemplatesQuery, AllTemplatesQueryVariables>): Apollo.UseSuspenseQueryResult<AllTemplatesQuery | undefined, AllTemplatesQueryVariables>;
-export function useAllTemplatesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<AllTemplatesQuery, AllTemplatesQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<AllTemplatesQuery, AllTemplatesQueryVariables>(AllTemplatesDocument, options);
-        }
-export type AllTemplatesQueryHookResult = ReturnType<typeof useAllTemplatesQuery>;
-export type AllTemplatesLazyQueryHookResult = ReturnType<typeof useAllTemplatesLazyQuery>;
-export type AllTemplatesSuspenseQueryHookResult = ReturnType<typeof useAllTemplatesSuspenseQuery>;
-export type AllTemplatesQueryResult = Apollo.QueryResult<AllTemplatesQuery, AllTemplatesQueryVariables>;
 export const ImagesDocument = gql`
     query images {
   imageList: itPolitoCrownlabsV1alpha1ImageListList {
@@ -4902,9 +4488,6 @@ export function useImagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ima
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ImagesQuery, ImagesQueryVariables>(ImagesDocument, options);
         }
-// @ts-ignore
-export function useImagesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ImagesQuery, ImagesQueryVariables>): Apollo.UseSuspenseQueryResult<ImagesQuery, ImagesQueryVariables>;
-export function useImagesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ImagesQuery, ImagesQueryVariables>): Apollo.UseSuspenseQueryResult<ImagesQuery | undefined, ImagesQueryVariables>;
 export function useImagesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ImagesQuery, ImagesQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ImagesQuery, ImagesQueryVariables>(ImagesDocument, options);
@@ -4926,7 +4509,6 @@ export const OwnedInstancesDocument = gql`
         labels
       }
       status {
-        ip
         phase
         url
         nodeName
@@ -4944,7 +4526,6 @@ export const OwnedInstancesDocument = gql`
         environments {
           name
           phase
-          ip
           initialReadyTime
         }
       }
@@ -4961,14 +4542,6 @@ export const OwnedInstancesDocument = gql`
         }
         tenantCrownlabsPolitoItTenantRef {
           name
-          tenantV1alpha2Wrapper {
-            itPolitoCrownlabsV1alpha2Tenant {
-              spec {
-                firstName
-                lastName
-              }
-            }
-          }
         }
         templateCrownlabsPolitoItTemplateRef {
           name
@@ -5024,9 +4597,6 @@ export function useOwnedInstancesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OwnedInstancesQuery, OwnedInstancesQueryVariables>(OwnedInstancesDocument, options);
         }
-// @ts-ignore
-export function useOwnedInstancesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OwnedInstancesQuery, OwnedInstancesQueryVariables>): Apollo.UseSuspenseQueryResult<OwnedInstancesQuery, OwnedInstancesQueryVariables>;
-export function useOwnedInstancesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<OwnedInstancesQuery, OwnedInstancesQueryVariables>): Apollo.UseSuspenseQueryResult<OwnedInstancesQuery | undefined, OwnedInstancesQueryVariables>;
 export function useOwnedInstancesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<OwnedInstancesQuery, OwnedInstancesQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<OwnedInstancesQuery, OwnedInstancesQueryVariables>(OwnedInstancesDocument, options);
@@ -5045,7 +4615,6 @@ export const InstancesLabelSelectorDocument = gql`
         creationTimestamp
       }
       status {
-        ip
         phase
         url
         nodeName
@@ -5063,7 +4632,6 @@ export const InstancesLabelSelectorDocument = gql`
         environments {
           name
           phase
-          ip
         }
       }
       spec {
@@ -5079,14 +4647,6 @@ export const InstancesLabelSelectorDocument = gql`
         }
         tenantCrownlabsPolitoItTenantRef {
           name
-          tenantV1alpha2Wrapper {
-            itPolitoCrownlabsV1alpha2Tenant {
-              spec {
-                firstName
-                lastName
-              }
-            }
-          }
         }
         templateCrownlabsPolitoItTemplateRef {
           name
@@ -5137,9 +4697,6 @@ export function useInstancesLabelSelectorLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<InstancesLabelSelectorQuery, InstancesLabelSelectorQueryVariables>(InstancesLabelSelectorDocument, options);
         }
-// @ts-ignore
-export function useInstancesLabelSelectorSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<InstancesLabelSelectorQuery, InstancesLabelSelectorQueryVariables>): Apollo.UseSuspenseQueryResult<InstancesLabelSelectorQuery, InstancesLabelSelectorQueryVariables>;
-export function useInstancesLabelSelectorSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<InstancesLabelSelectorQuery, InstancesLabelSelectorQueryVariables>): Apollo.UseSuspenseQueryResult<InstancesLabelSelectorQuery | undefined, InstancesLabelSelectorQueryVariables>;
 export function useInstancesLabelSelectorSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<InstancesLabelSelectorQuery, InstancesLabelSelectorQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<InstancesLabelSelectorQuery, InstancesLabelSelectorQueryVariables>(InstancesLabelSelectorDocument, options);
@@ -5180,9 +4737,6 @@ export function useNodesLabelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<NodesLabelsQuery, NodesLabelsQueryVariables>(NodesLabelsDocument, options);
         }
-// @ts-ignore
-export function useNodesLabelsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<NodesLabelsQuery, NodesLabelsQueryVariables>): Apollo.UseSuspenseQueryResult<NodesLabelsQuery, NodesLabelsQueryVariables>;
-export function useNodesLabelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<NodesLabelsQuery, NodesLabelsQueryVariables>): Apollo.UseSuspenseQueryResult<NodesLabelsQuery | undefined, NodesLabelsQueryVariables>;
 export function useNodesLabelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<NodesLabelsQuery, NodesLabelsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<NodesLabelsQuery, NodesLabelsQueryVariables>(NodesLabelsDocument, options);
@@ -5237,9 +4791,6 @@ export function useWorkspaceSharedVolumesLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WorkspaceSharedVolumesQuery, WorkspaceSharedVolumesQueryVariables>(WorkspaceSharedVolumesDocument, options);
         }
-// @ts-ignore
-export function useWorkspaceSharedVolumesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WorkspaceSharedVolumesQuery, WorkspaceSharedVolumesQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceSharedVolumesQuery, WorkspaceSharedVolumesQueryVariables>;
-export function useWorkspaceSharedVolumesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceSharedVolumesQuery, WorkspaceSharedVolumesQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceSharedVolumesQuery | undefined, WorkspaceSharedVolumesQueryVariables>;
 export function useWorkspaceSharedVolumesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceSharedVolumesQuery, WorkspaceSharedVolumesQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<WorkspaceSharedVolumesQuery, WorkspaceSharedVolumesQueryVariables>(WorkspaceSharedVolumesDocument, options);
@@ -5329,9 +4880,6 @@ export function useWorkspaceTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WorkspaceTemplatesQuery, WorkspaceTemplatesQueryVariables>(WorkspaceTemplatesDocument, options);
         }
-// @ts-ignore
-export function useWorkspaceTemplatesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WorkspaceTemplatesQuery, WorkspaceTemplatesQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceTemplatesQuery, WorkspaceTemplatesQueryVariables>;
-export function useWorkspaceTemplatesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceTemplatesQuery, WorkspaceTemplatesQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceTemplatesQuery | undefined, WorkspaceTemplatesQueryVariables>;
 export function useWorkspaceTemplatesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceTemplatesQuery, WorkspaceTemplatesQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<WorkspaceTemplatesQuery, WorkspaceTemplatesQueryVariables>(WorkspaceTemplatesDocument, options);
@@ -5356,23 +4904,6 @@ export const TenantDocument = gql`
       workspaces {
         role
         name
-        workspaceWrapperTenantV1alpha2 {
-          itPolitoCrownlabsV1alpha1Workspace {
-            spec {
-              prettyName
-              quota {
-                cpu
-                instances
-                memory
-              }
-            }
-            status {
-              namespace {
-                name
-              }
-            }
-          }
-        }
       }
       publicKeys
     }
@@ -5413,9 +4944,6 @@ export function useTenantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ten
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TenantQuery, TenantQueryVariables>(TenantDocument, options);
         }
-// @ts-ignore
-export function useTenantSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TenantQuery, TenantQueryVariables>): Apollo.UseSuspenseQueryResult<TenantQuery, TenantQueryVariables>;
-export function useTenantSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TenantQuery, TenantQueryVariables>): Apollo.UseSuspenseQueryResult<TenantQuery | undefined, TenantQueryVariables>;
 export function useTenantSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TenantQuery, TenantQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TenantQuery, TenantQueryVariables>(TenantDocument, options);
@@ -5470,9 +4998,6 @@ export function useTenantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Te
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TenantsQuery, TenantsQueryVariables>(TenantsDocument, options);
         }
-// @ts-ignore
-export function useTenantsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TenantsQuery, TenantsQueryVariables>): Apollo.UseSuspenseQueryResult<TenantsQuery, TenantsQueryVariables>;
-export function useTenantsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TenantsQuery, TenantsQueryVariables>): Apollo.UseSuspenseQueryResult<TenantsQuery | undefined, TenantsQueryVariables>;
 export function useTenantsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TenantsQuery, TenantsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<TenantsQuery, TenantsQueryVariables>(TenantsDocument, options);
@@ -5481,57 +5006,6 @@ export type TenantsQueryHookResult = ReturnType<typeof useTenantsQuery>;
 export type TenantsLazyQueryHookResult = ReturnType<typeof useTenantsLazyQuery>;
 export type TenantsSuspenseQueryHookResult = ReturnType<typeof useTenantsSuspenseQuery>;
 export type TenantsQueryResult = Apollo.QueryResult<TenantsQuery, TenantsQueryVariables>;
-export const WorkspaceDocument = gql`
-    query workspace($name: String!) {
-  workspace: itPolitoCrownlabsV1alpha1Workspace(name: $name) {
-    metadata {
-      name
-      namespace
-      labels
-    }
-    spec {
-      prettyName
-      autoEnroll
-    }
-  }
-}
-    `;
-
-/**
- * __useWorkspaceQuery__
- *
- * To run a query within a React component, call `useWorkspaceQuery` and pass it any options that fit your needs.
- * When your component renders, `useWorkspaceQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useWorkspaceQuery({
- *   variables: {
- *      name: // value for 'name'
- *   },
- * });
- */
-export function useWorkspaceQuery(baseOptions: Apollo.QueryHookOptions<WorkspaceQuery, WorkspaceQueryVariables> & ({ variables: WorkspaceQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<WorkspaceQuery, WorkspaceQueryVariables>(WorkspaceDocument, options);
-      }
-export function useWorkspaceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WorkspaceQuery, WorkspaceQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<WorkspaceQuery, WorkspaceQueryVariables>(WorkspaceDocument, options);
-        }
-// @ts-ignore
-export function useWorkspaceSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WorkspaceQuery, WorkspaceQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceQuery, WorkspaceQueryVariables>;
-export function useWorkspaceSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceQuery, WorkspaceQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceQuery | undefined, WorkspaceQueryVariables>;
-export function useWorkspaceSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceQuery, WorkspaceQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<WorkspaceQuery, WorkspaceQueryVariables>(WorkspaceDocument, options);
-        }
-export type WorkspaceQueryHookResult = ReturnType<typeof useWorkspaceQuery>;
-export type WorkspaceLazyQueryHookResult = ReturnType<typeof useWorkspaceLazyQuery>;
-export type WorkspaceSuspenseQueryHookResult = ReturnType<typeof useWorkspaceSuspenseQuery>;
-export type WorkspaceQueryResult = Apollo.QueryResult<WorkspaceQuery, WorkspaceQueryVariables>;
 export const WorkspaceQuotasDocument = gql`
     query workspaceQuotas($names: [String!]) {
   workspaces: itPolitoCrownlabsV1alpha1WorkspaceList {
@@ -5576,9 +5050,6 @@ export function useWorkspaceQuotasLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WorkspaceQuotasQuery, WorkspaceQuotasQueryVariables>(WorkspaceQuotasDocument, options);
         }
-// @ts-ignore
-export function useWorkspaceQuotasSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WorkspaceQuotasQuery, WorkspaceQuotasQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceQuotasQuery, WorkspaceQuotasQueryVariables>;
-export function useWorkspaceQuotasSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceQuotasQuery, WorkspaceQuotasQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspaceQuotasQuery | undefined, WorkspaceQuotasQueryVariables>;
 export function useWorkspaceQuotasSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspaceQuotasQuery, WorkspaceQuotasQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<WorkspaceQuotasQuery, WorkspaceQuotasQueryVariables>(WorkspaceQuotasDocument, options);
@@ -5593,16 +5064,10 @@ export const WorkspacesDocument = gql`
     items {
       metadata {
         name
-        deletionTimestamp
       }
       spec {
         prettyName
         autoEnroll
-        quota {
-          cpu
-          memory
-          instances
-        }
       }
     }
   }
@@ -5633,9 +5098,6 @@ export function useWorkspacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WorkspacesQuery, WorkspacesQueryVariables>(WorkspacesDocument, options);
         }
-// @ts-ignore
-export function useWorkspacesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WorkspacesQuery, WorkspacesQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspacesQuery, WorkspacesQueryVariables>;
-export function useWorkspacesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspacesQuery, WorkspacesQueryVariables>): Apollo.UseSuspenseQueryResult<WorkspacesQuery | undefined, WorkspacesQueryVariables>;
 export function useWorkspacesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkspacesQuery, WorkspacesQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<WorkspacesQuery, WorkspacesQueryVariables>(WorkspacesDocument, options);
@@ -5659,7 +5121,6 @@ export const UpdatedOwnedInstancesDocument = gql`
         labels
       }
       status {
-        ip
         phase
         url
         nodeName
@@ -5677,7 +5138,6 @@ export const UpdatedOwnedInstancesDocument = gql`
         environments {
           name
           phase
-          ip
           initialReadyTime
         }
       }
@@ -5758,7 +5218,6 @@ export const UpdatedInstancesLabelSelectorDocument = gql`
         creationTimestamp
       }
       status {
-        ip
         phase
         url
         nodeName
@@ -5776,7 +5235,6 @@ export const UpdatedInstancesLabelSelectorDocument = gql`
         environments {
           name
           phase
-          ip
           initialReadyTime
         }
       }
@@ -5793,14 +5251,6 @@ export const UpdatedInstancesLabelSelectorDocument = gql`
         }
         tenantCrownlabsPolitoItTenantRef {
           name
-          tenantV1alpha2Wrapper {
-            itPolitoCrownlabsV1alpha2Tenant {
-              spec {
-                firstName
-                lastName
-              }
-            }
-          }
         }
         templateCrownlabsPolitoItTemplateRef {
           name
@@ -5909,52 +5359,8 @@ export type UpdatedWorkspaceTemplatesSubscriptionHookResult = ReturnType<typeof 
 export type UpdatedWorkspaceTemplatesSubscriptionResult = Apollo.SubscriptionResult<UpdatedWorkspaceTemplatesSubscription>;
 export const UpdatedTenantDocument = gql`
     subscription updatedTenant($tenantId: String!) {
-  updatedTenant: itPolitoCrownlabsV1alpha2TenantUpdate(name: $tenantId) {
+  updatedInstance: itPolitoCrownlabsV1alpha2InstanceUpdate(namespace: $tenantId) {
     updateType
-    tenant: payload {
-      spec {
-        email
-        firstName
-        lastName
-        lastLogin
-        personalWorkspace {
-          cpu
-          instances
-          memory
-        }
-        workspaces {
-          role
-          name
-          workspaceWrapperTenantV1alpha2 {
-            itPolitoCrownlabsV1alpha1Workspace {
-              spec {
-                prettyName
-                quota {
-                  cpu
-                  instances
-                  memory
-                }
-              }
-              status {
-                namespace {
-                  name
-                }
-              }
-            }
-          }
-        }
-        publicKeys
-      }
-      metadata {
-        name
-      }
-      status {
-        personalNamespace {
-          name
-          created
-        }
-      }
-    }
   }
 }
     `;

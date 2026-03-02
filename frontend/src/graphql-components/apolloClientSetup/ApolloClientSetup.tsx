@@ -32,7 +32,7 @@ if (import.meta.env.DEV) {
 }
 
 const httpUri = VITE_APP_CROWNLABS_GRAPHQL_URL;
-const wsUri = httpUri.replace(/^http?/, 'ws') + '/subscription';
+const wsUri = httpUri.replace(/^http?/, 'ws').replace(/\/graphql$/, '') + '/subscription';
 export interface Definition {
   kind: string;
   operation?: string;
@@ -47,72 +47,70 @@ const ApolloClientSetup: FC<PropsWithChildren> = props => {
     useState<ApolloClient<NormalizedCacheObject> | null>(null);
 
   useEffect(() => {
-    if (token) {
-      const authHeader = {
-        authorization: `Bearer ${token}`,
-      };
-      const httpLink = new HttpLink({
-        uri: httpUri,
-        headers: authHeader,
-      });
+    // Create auth header only if token exists
+    const authHeader = token ? { authorization: `Bearer ${token}` } : {};
+    
+    const httpLink = new HttpLink({
+      uri: httpUri,
+      headers: authHeader,
+    });
 
-      const wsLink = new GraphQLWsLink(
-        createClient({
-          url: wsUri,
-          connectionParams: authHeader,
-          shouldRetry: () => true,
-        }),
-      );
+    const wsLink = new GraphQLWsLink(
+      createClient({
+        url: wsUri,
+        connectionParams: authHeader,
+        shouldRetry: () => true,
+      }),
+    );
 
-      // remove only the exact "Expected Iterable ... Spec6.environmentList" GraphQL error
-      const removeSpecificEnvListErrorLink = onError(
-        ({ graphQLErrors, response }) => {
-          if (!graphQLErrors || !response) return;
+    // remove only the exact "Expected Iterable ... Spec6.environmentList" GraphQL error
+    const removeSpecificEnvListErrorLink = onError(
+      ({ graphQLErrors, response }) => {
+        if (!graphQLErrors || !response) return;
 
-          const remaining = graphQLErrors.filter(err => {
-            const msg = typeof err?.message === 'string' ? err.message : '';
-            const path = Array.isArray(err?.path) ? err.path : [];
+        const remaining = graphQLErrors.filter(err => {
+          const msg = typeof err?.message === 'string' ? err.message : '';
+          const path = Array.isArray(err?.path) ? err.path : [];
 
-            const isExactEnvListError =
-              msg.includes('Expected Iterable') &&
-              path.length === 4 &&
-              path[0] === 'updatedTemplate' &&
-              path[1] === 'template' &&
-              path[2] === 'spec' &&
-              path[3] === 'environmentList';
+          const isExactEnvListError =
+            msg.includes('Expected Iterable') &&
+            path.length === 4 &&
+            path[0] === 'updatedTemplate' &&
+            path[1] === 'template' &&
+            path[2] === 'spec' &&
+            path[3] === 'environmentList';
 
-            return !isExactEnvListError;
-          });
+          return !isExactEnvListError;
+        });
 
-          response.errors = remaining.length ? remaining : undefined;
-        },
-      );
+        response.errors = remaining.length ? remaining : undefined;
+      },
+    );
 
-      const newClient = new ApolloClient({
-        link: from([
-          removeSpecificEnvListErrorLink,
-          split(
-            ({ query }) => {
-              const { kind, operation }: Definition = getMainDefinition(query);
-              // If this is a subscription query, use wsLink, otherwise use httpLink
-              return (
-                kind === 'OperationDefinition' && operation === 'subscription'
-              );
-            },
-            wsLink,
-            httpLink,
-          ),
-        ]),
-        cache: new InMemoryCache(),
-      });
+    const newClient = new ApolloClient({
+      link: from([
+        removeSpecificEnvListErrorLink,
+        split(
+          ({ query }) => {
+            const { kind, operation }: Definition = getMainDefinition(query);
+            // If this is a subscription query, use wsLink, otherwise use httpLink
+            return (
+              kind === 'OperationDefinition' && operation === 'subscription'
+            );
+          },
+          wsLink,
+          httpLink,
+        ),
+      ]),
+      cache: new InMemoryCache(),
+    });
 
-      setApolloClient(newClient);
+    setApolloClient(newClient);
 
-      return () => {
-        wsLink.client.dispose();
-        newClient.clearStore();
-      };
-    }
+    return () => {
+      wsLink.client.dispose();
+      newClient.clearStore();
+    };
   }, [token]);
 
   return (
