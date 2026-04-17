@@ -36,10 +36,10 @@ const Dashboard: FC<IDashboardProps> = ({ ...props }) => {
     return workspaces
       .map((ws, idx) => ({
         id: idx,
-        title: ws.prettyName,
+        title: ws.prettyName || ws.name || '',
         waitingTenants: ws.waitingTenants,
       }))
-      .sort((a, b) => a.title.localeCompare(b.title));
+      .sort((a, b) => (a.title || '').localeCompare(b.title || ''));
   }, [workspaces]);
 
   return (
