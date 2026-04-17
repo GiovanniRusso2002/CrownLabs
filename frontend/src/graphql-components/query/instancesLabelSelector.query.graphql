@@ -7,7 +7,7 @@ query instancesLabelSelector($labels: String) {
         creationTimestamp
       }
       status {
-        ip
+# ip # Campo rimosso dallo schema
         phase
         url
         nodeName
@@ -25,7 +25,7 @@ query instancesLabelSelector($labels: String) {
         environments {
           name
           phase
-          ip
+# ip # Campo rimosso dallo schema
         }
       }
       spec {
@@ -41,14 +41,6 @@ query instancesLabelSelector($labels: String) {
         }
         tenantCrownlabsPolitoItTenantRef {
           name
-          tenantV1alpha2Wrapper {
-            itPolitoCrownlabsV1alpha2Tenant {
-              spec {
-                firstName
-                lastName
-              }
-            }
-          }
         }
         templateCrownlabsPolitoItTemplateRef {
           name

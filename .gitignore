@@ -13,3 +13,7 @@ node_modules
 
 # MacBook
 .DS_Store
+
+# Temporary test files (solo file temporanei di test)
+test-query.json
+tenant-s343424-ns.yaml

@@ -32,7 +32,7 @@ mutation createInstance(
       labels
     }
     status {
-      ip
+# ip # Campo rimosso dallo schema
       phase
       url
       nodeName
@@ -40,7 +40,7 @@ mutation createInstance(
       environments {
         name
         phase
-        ip
+# ip # Campo rimosso dallo schema
         initialReadyTime
       }
     }

@@ -151,16 +151,20 @@ async function main() {
   serverCleanup = useServer({
     schema,
     onConnect: ({ connectionParams }, _webSocket, _context) => {
-      const token = getBearerToken(connectionParams);
-      if (!token) {
+      const token = getBearerToken(connectionParams, inCluster);
+      if (!token && inCluster) {
         logger.info('Incoming WS connection without token');
         return false;
       }
-      try {
-        const { preferred_username: decodedUser } = JSON.parse(atob(token.split('.')[1])); // JWT data part
-        logger.info({ decodedUser }, 'Incoming WS connection');
-      } catch (err) {
-        logger.warn({ error: err.message }, 'Incoming WS connection - Token parsing failed');
+      if (token) {
+        try {
+          const { preferred_username: decodedUser } = JSON.parse(atob(token.split('.')[1])); // JWT data part
+          logger.info({ decodedUser }, 'Incoming WS connection');
+        } catch (err) {
+          logger.warn({ error: err.message }, 'Incoming WS connection - Token parsing failed');
+        }
+      } else {
+        logger.info('Incoming WS connection without token (local mode)');
       }
       return { token };
     },
@@ -168,7 +172,7 @@ async function main() {
       logger.info('WS disconnected');
     },
     context: ({ connectionParams }, _msg, _args) => {
-      const token = getBearerToken(connectionParams);
+      const token = getBearerToken(connectionParams, inCluster);
       return { token };
     },
   }, wsServer);
@@ -176,12 +180,12 @@ async function main() {
   await server.start();
 
   app.use(
-    '/',
+    '/graphql',
     cors(),
     express.json(),
     expressMiddleware(server, {
       context: async ({ req }) => {
-        const token = getBearerToken(req.headers);
+        const token = getBearerToken(req.headers, inCluster);
         return { token };
       },
     }),

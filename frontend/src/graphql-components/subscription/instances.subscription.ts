@@ -18,7 +18,6 @@ export default gql`
           labels
         }
         status {
-          ip
           phase
           url
           nodeName
@@ -36,7 +35,6 @@ export default gql`
           environments {
             name
             phase
-            ip
             initialReadyTime
           }
         }
