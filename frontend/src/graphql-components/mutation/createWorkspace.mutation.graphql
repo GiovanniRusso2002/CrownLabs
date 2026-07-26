@@ -2,10 +2,10 @@ mutation createWorkspace(
   $name: String!
   $prettyName: String!
   $autoEnroll: AutoEnroll
-  $cpu: JSON!
+  $cpu: BigInt!
   $memory: JSON!
   $labels: JSON!
-  $instances: Int!
+  $instances: BigInt!
 ) {
   createdWorkspace: createCrownlabsPolitoItV1alpha1Workspace(
     itPolitoCrownlabsV1alpha1WorkspaceInput: {
